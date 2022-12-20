@@ -2,11 +2,15 @@ const fs = require("fs")
 const http = require("http")
 const url = require("url")
 
+const slugify = require('slugify')
+
 const replaceTemplate = require("./modules/replaceTemplate")
 
 // Can use blocking code because this code will be executed only once because it is outside the callback function (createServer)
 const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, 'utf8')
 const dataObject = JSON.parse(data)
+const slugs = dataObject.map(el => slugify(el.productName, {lower:true}))
+console.log(slugs)
 // Same logic above, These files are read once
 const tempOverview = fs.readFileSync(`${__dirname}/templates/template-overview.html`, 'utf8')
 const tempProduct = fs.readFileSync(`${__dirname}/templates/template-product.html`, 'utf8')
