@@ -1,3 +1,3 @@
-console.log("Hello from the module");
+console.log('Hello from module 3');
 
-module.exports = () => console.log("Log this beautiful text 😍");
+module.exports = () => console.log('This Beautiful text');
