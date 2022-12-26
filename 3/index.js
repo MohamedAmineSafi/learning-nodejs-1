@@ -27,22 +27,6 @@ const writeFilePro = (file, data) => {
   });
 };
 
-// readFilePro(`${__dirname}/dog.txt`)
-//   .then((data) => {
-//     console.log(data);
-//     return superagent.get(`https://dog.ceo/api/breed/${data}/images/random`);
-//   })
-//   .then((res) => {
-//     console.log(res.body.message);
-//     return writeFilePro(`${__dirname}/dogImage.txt`, res.body.message);
-//   })
-//   .then((data) => {
-//     console.log(data);
-//   })
-//   .catch((err) => {
-//     console.log(err.message);
-//   });
-
 // Looks synchronic but actually is asynchronous
 const getDogPic = async () => {
   try {
@@ -57,8 +41,30 @@ const getDogPic = async () => {
     await writeFilePro(`${__dirname}/dogImage.txt`, res.body.message);
     console.log('dog image saved');
   } catch (err) {
-    console.log(err);
+    console.log('ERR');
+    throw err;
   }
+
+  return 'HI 123';
 };
 
-getDogPic();
+console.log('-----------');
+getDogPic()
+  .then((x) => {
+    console.log(x);
+    console.log('*********');
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+(async () => {
+  try {
+    console.log('-----------');
+    const x = await getDogPic();
+    console.log(x);
+    console.log('*********');
+  } catch (err) {
+    console.log(err);
+  }
+})(); // Declare a function and call it right away
