@@ -33,12 +33,22 @@ const getDogPic = async () => {
     const data = await readFilePro(`${__dirname}/dog.txt`);
     console.log(data);
 
-    const res = await superagent.get(
+    const res1Pro = superagent.get(
       `https://dog.ceo/api/breed/${data}/images/random`
     );
-    console.log(res.body.message);
 
-    await writeFilePro(`${__dirname}/dogImage.txt`, res.body.message);
+    const res2Pro = superagent.get(
+      `https://dog.ceo/api/breed/${data}/images/random`
+    );
+
+    const res3Pro = superagent.get(
+      `https://dog.ceo/api/breed/${data}/images/random`
+    );
+    const all = await Promise.all([res1Pro, res2Pro, res3Pro]);
+    const imgs = all.map((el) => el.body.message);
+    console.log(imgs);
+
+    await writeFilePro(`${__dirname}/dogImage.txt`, imgs.join('\n'));
     console.log('dog image saved');
   } catch (err) {
     console.log('ERR');
@@ -48,15 +58,15 @@ const getDogPic = async () => {
   return 'HI 123';
 };
 
-console.log('-----------');
-getDogPic()
-  .then((x) => {
-    console.log(x);
-    console.log('*********');
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+// console.log('-----------');
+// getDogPic()
+//   .then((x) => {
+//     console.log(x);
+//     console.log('*********');
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
 
 (async () => {
   try {
